@@ -1,3 +1,9 @@
+from app.generation.generation_service import StoryGenerationService
+from app.generation.models import StoryGenerationRequest
+from app.generation.generation_service import GenerationResult
+from app.safety.categories import SafetyDecision
+
+
 from fastapi import APIRouter, HTTPException
 
 from app.services.story_registry import get_story
@@ -14,6 +20,26 @@ def get_elephant_moon_story():
     if story is None:
         raise HTTPException(status_code=404, detail="story not found")
     return story.model_dump()
+
+
+@router.post("/generate")
+def generate_story(request: StoryGenerationRequest):
+    service = StoryGenerationService()
+
+    result: GenerationResult = service.generate(request)
+
+    if result.decision != SafetyDecision.ALLOW:
+        return {
+            "decision": result.decision,
+            "story": None,
+            "safe_response": result.safe_response,
+        }
+
+    return {
+        "decision": result.decision,
+        "story": result.story,
+        "safe_response": None,
+    }
 
 
 @router.get("/{story_id}")
