@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import health, media, sessions, stories, tts
+from app.api import health, media, safety, sessions, stories, tts
 
 app = FastAPI(
     title="KADHAI API",
@@ -24,4 +24,4 @@ app.include_router(health.router)
 app.include_router(stories.router)
 app.include_router(sessions.router)
 app.include_router(media.router)
-app.include_router(tts.router)
+app.include_router(safety.router)
