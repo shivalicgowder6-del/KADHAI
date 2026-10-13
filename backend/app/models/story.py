@@ -30,19 +30,17 @@ from typing import Literal, Optional
 from pydantic import BaseModel, Field, model_validator
 
 
-class LocalizedText(BaseModel):
-    """Every piece of child-facing text is bilingual from day one.
 
-    We could have made `language` a top-level story field and stored one
-    language per story, but that would mean generating and validating each
-    language as a completely separate story graph — double the LLM calls,
-    double the safety checks, and no guarantee the two versions even have
-    the same branch structure. Storing both languages on every text field
-    means one story graph, one validation pass, two languages for free.
-    """
+class LocalizedText(BaseModel):
+    """Localized text for KADHAI's six supported languages."""
 
     en: str
     ta: str
+    hi: str = ""
+    ml: str = ""
+    kn: str = ""
+    te: str = ""
+
 
 
 class InteractionOption(BaseModel):

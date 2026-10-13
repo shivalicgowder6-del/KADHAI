@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import StoryPlayer from './components/StoryPlayer'
 import type { Language } from './types/story'
@@ -5,6 +6,15 @@ import type { Language } from './types/story'
 function App() {
   const [language, setLanguage] = useState<Language>('en')
   const [storyStarted, setStoryStarted] = useState(false)
+
+  const languages: { code: Language; label: string; native: string }[] = [
+    { code: 'en', label: 'English', native: 'English' },
+    { code: 'ta', label: 'Tamil', native: 'தமிழ்' },
+    { code: 'hi', label: 'Hindi', native: 'हिन्दी' },
+    { code: 'ml', label: 'Malayalam', native: 'മലയാളം' },
+    { code: 'kn', label: 'Kannada', native: 'ಕನ್ನಡ' },
+    { code: 'te', label: 'Telugu', native: 'తెలుగు' },
+  ]
 
   if (storyStarted) {
     return (
@@ -32,37 +42,41 @@ function App() {
           Step into a story where your choices help shape what happens next.
         </p>
 
-        <div className="mb-8 rounded-3xl bg-white p-6 shadow-xl">
-          <p className="mb-4 font-bold text-slate-700">
+        <div className="mb-8 w-full max-w-xl rounded-3xl bg-white p-6 shadow-xl">
+          <p className="mb-5 font-bold text-slate-700">
             Choose your language
           </p>
 
-          <div className="flex gap-3">
-            <button
-              onClick={() => setLanguage('en')}
-              className={`rounded-full px-6 py-3 font-bold transition ${
-                language === 'en'
-                  ? 'bg-sky-600 text-white'
-                  : 'bg-slate-100 text-slate-600'
-              }`}
-            >
-              English
-            </button>
-
-            <button
-              onClick={() => setLanguage('ta')}
-              className={`rounded-full px-6 py-3 font-bold transition ${
-                language === 'ta'
-                  ? 'bg-sky-600 text-white'
-                  : 'bg-slate-100 text-slate-600'
-              }`}
-            >
-              தமிழ்
-            </button>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {languages.map((item) => (
+              <button
+                key={item.code}
+                type="button"
+                onClick={() => setLanguage(item.code)}
+                aria-pressed={language === item.code}
+                className={`rounded-2xl border-2 px-4 py-4 font-bold transition ${
+                  language === item.code
+                    ? 'border-sky-600 bg-sky-600 text-white shadow-md'
+                    : 'border-slate-100 bg-slate-50 text-slate-700 hover:border-sky-300 hover:bg-sky-50'
+                }`}
+              >
+                <span className="block text-base">{item.native}</span>
+                <span
+                  className={`mt-1 block text-xs ${
+                    language === item.code
+                      ? 'text-sky-100'
+                      : 'text-slate-500'
+                  }`}
+                >
+                  {item.label}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
 
         <button
+          type="button"
           onClick={() => setStoryStarted(true)}
           className="rounded-full bg-sky-600 px-10 py-5 text-xl font-black text-white shadow-xl transition hover:-translate-y-1 hover:bg-sky-700"
         >
@@ -76,5 +90,4 @@ function App() {
     </main>
   )
 }
-
 export default App

@@ -23,5 +23,6 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(stories.router)
 app.include_router(sessions.router)
+app.include_router(tts.router)
 app.include_router(media.router)
 app.include_router(safety.router)

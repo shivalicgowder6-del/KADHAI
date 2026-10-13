@@ -71,7 +71,7 @@ def test_story_generator_returns_valid_story():
 
     assert story.story_id.startswith("generated-")
     assert story.age_band == "4-6"
-    assert story.languages == ["en", "ta"]
+    assert story.languages == ["en", "ta", "hi", "ml", "kn", "te"]
     assert story.learning_objectives == ["problem_solving.options"]
     assert len(story.scenes) == 4
 

@@ -1,8 +1,12 @@
-export type Language = 'en' | 'ta'
+export type Language = 'en' | 'ta' | 'hi' | 'ml' | 'kn' | 'te'
 
 export interface LocalizedText {
   en: string
   ta: string
+  hi: string
+  ml: string
+  kn: string
+  te: string
 }
 
 export interface Character {

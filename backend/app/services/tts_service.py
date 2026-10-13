@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -8,11 +9,15 @@ import edge_tts
 VOICE_MAP = {
     "en": "en-US-AriaNeural",
     "ta": "ta-IN-PallaviNeural",
+    "hi": "hi-IN-SwaraNeural",
+    "ml": "ml-IN-SobhanaNeural",
+    "kn": "kn-IN-SapnaNeural",
+    "te": "te-IN-ShrutiNeural",
 }
 
 
 class TTSService:
-    """Text-to-speech service for KADHAI."""
+    """Text-to-speech service for KADHAI's six supported languages."""
 
     def __init__(self, output_dir: Path | None = None) -> None:
         self.output_dir = output_dir or (
@@ -36,17 +41,7 @@ class TTSService:
         language: str,
         filename: str,
     ) -> Path:
-        """
-        Convert narration text into an MP3 file.
-
-        Args:
-            text: Narration text.
-            language: KADHAI language code ("en" or "ta").
-            filename: Output filename, e.g. "scene-n1.mp3".
-
-        Returns:
-            Path to the generated MP3 file.
-        """
+        """Convert narration text into an MP3 file."""
         if not text.strip():
             raise ValueError("TTS text cannot be empty.")
 
@@ -67,8 +62,6 @@ class TTSService:
         communicator.save_sync(str(output_path))
 
         if not output_path.exists() or output_path.stat().st_size == 0:
-            raise RuntimeError(
-                f"TTS generation failed: {output_path}"
-            )
+            raise RuntimeError(f"TTS generation failed: {output_path}")
 
         return output_path

@@ -63,3 +63,24 @@ export async function takeStoryTurn(
     },
   )
 }
+export interface CreateTTSResponse {
+  audio_path: string
+}
+
+export async function generateNarration(
+  text: string,
+  language: string,
+  filename: string,
+): Promise<CreateTTSResponse> {
+  return request<CreateTTSResponse>('/api/media/tts', {
+    method: 'POST',
+    body: JSON.stringify({
+      text,
+      language,
+      filename,
+    }),
+  })
+}
+export function getAudioUrl(filename: string): string {
+  return `${API_BASE_URL}/api/media/audio/${encodeURIComponent(filename)}`
+}

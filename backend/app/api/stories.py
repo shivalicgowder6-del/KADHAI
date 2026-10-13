@@ -33,12 +33,14 @@ def generate_story(request: StoryGenerationRequest):
             "decision": result.decision,
             "story": None,
             "safe_response": result.safe_response,
+            "used_ai": False,
         }
 
     return {
         "decision": result.decision,
         "story": result.story,
         "safe_response": None,
+        "used_ai": result.used_ai,
     }
 
 
